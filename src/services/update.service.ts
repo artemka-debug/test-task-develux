@@ -29,6 +29,17 @@ export class UpdateService {
       throw new Error(`Version ${packageVersion} not found`);
     }
 
+    if (
+      !(
+        packageName in packageJson.dependencies &&
+        packageName in packageJson.devDependencies
+      )
+    ) {
+      throw new Error(
+        `Package ${packageName} not found in dependencies or devDependencies`,
+      );
+    }
+
     if (packageName in packageJson.dependencies) {
       console.log(`Updating ${packageName} in dependencies...`);
       packageJson.dependencies[packageName] = packageVersion;
