@@ -27,10 +27,8 @@ export class UpdateService {
     }
 
     if (
-      !(
-        packageName in packageJson.dependencies &&
-        packageName in packageJson.devDependencies
-      )
+      !(packageName in packageJson.dependencies) &&
+      !(packageName in packageJson.devDependencies)
     ) {
       throw new Error(
         `Package ${packageName} not found in dependencies or devDependencies`,
@@ -71,7 +69,7 @@ export class UpdateService {
     packageName: string,
     packageVersion: string,
   ) {
-    if (packageName in deps && !deps[packageName].endsWith(packageVersion)) {
+    if (packageName in deps) {
       console.log(`Updating ${packageName}...`);
       deps[packageName] = packageVersion;
     }
